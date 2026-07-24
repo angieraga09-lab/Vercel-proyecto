@@ -1,14 +1,25 @@
-let totalGeneral = 0;
+// ===============================
+// SISTEMA DE GESTIÓN DE PRODUCTOS
+// ===============================
 
-function agregarProducto(){
+let productos = [];
+let contador = 1;
 
-    let producto = document.getElementById("producto").value;
+function agregarProducto() {
+
+    let nombre = document.getElementById("producto").value.trim();
+    let categoria = document.getElementById("categoria").value;
     let precio = parseFloat(document.getElementById("precio").value);
     let cantidad = parseInt(document.getElementById("cantidad").value);
 
-    if(producto=="" || isNaN(precio) || isNaN(cantidad)){
+    if (
+        nombre === "" ||
+        categoria === "" ||
+        isNaN(precio) ||
+        isNaN(cantidad)
+    ) {
 
-        alert("Complete todos los campos");
+        alert("Debe completar todos los campos.");
 
         return;
 
@@ -16,39 +27,184 @@ function agregarProducto(){
 
     let total = precio * cantidad;
 
-    totalGeneral += total;
+    let producto = {
 
-    let tabla = document.getElementById("tablaProductos");
+        id: contador,
+        nombre: nombre,
+        categoria: categoria,
+        precio: precio,
+        cantidad: cantidad,
+        total: total
 
-    let fila = tabla.insertRow();
+    };
 
-    fila.insertCell(0).innerHTML = producto;
-    fila.insertCell(1).innerHTML = "$" + precio.toFixed(2);
-    fila.insertCell(2).innerHTML = cantidad;
-    fila.insertCell(3).innerHTML = "$" + total.toFixed(2);
+    productos.push(producto);
 
-    let accion = fila.insertCell(4);
+    contador++;
 
-    accion.innerHTML = "<button class='eliminar' onclick='eliminarProducto(this," + total + ")'>Eliminar</button>";
+    mostrarProductos();
 
-    document.getElementById("totalGeneral").innerHTML =
-    "Valor Total: $" + totalGeneral.toFixed(2);
-
-    document.getElementById("producto").value="";
-    document.getElementById("precio").value="";
-    document.getElementById("cantidad").value="";
+    limpiarFormulario();
 
 }
 
-function eliminarProducto(boton,total){
+function mostrarProductos() {
 
-    totalGeneral -= total;
+    let tabla = document.getElementById("tablaProductos");
 
-    let fila = boton.parentNode.parentNode;
+    tabla.innerHTML = "";
 
-    fila.remove();
+    let valorInventario = 0;
 
-    document.getElementById("totalGeneral").innerHTML =
-    "Valor Total: $" + totalGeneral.toFixed(2);
+    productos.forEach(function (item, index) {
+
+        valorInventario += item.total;
+
+        tabla.innerHTML += `
+
+        <tr>
+
+            <td>${item.id}</td>
+
+            <td>${item.nombre}</td>
+
+            <td>${item.categoria}</td>
+
+            <td>$${item.precio.toLocaleString()}</td>
+
+            <td>${item.cantidad}</td>
+
+            <td>$${item.total.toLocaleString()}</td>
+
+            <td>
+
+                <button onclick="editarProducto(${index})">
+
+                    Editar
+
+                </button>
+
+                <button onclick="eliminarProducto(${index})">
+
+                    Eliminar
+
+                </button>
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+    document.getElementById("cantidadProductos").textContent = productos.length;
+
+    document.getElementById("productosRegistrados").textContent = productos.length;
+
+    document.getElementById("valorInventario").textContent =
+        "$" + valorInventario.toLocaleString();
+
+}
+
+function limpiarFormulario() {
+
+    document.getElementById("producto").value = "";
+
+    document.getElementById("categoria").value = "";
+
+    document.getElementById("precio").value = "";
+
+    document.getElementById("cantidad").value = "";
+
+}
+// =========================================
+// EDITAR PRODUCTO
+// =========================================
+
+function editarProducto(indice) {
+
+    let producto = productos[indice];
+
+    document.getElementById("producto").value = producto.nombre;
+    document.getElementById("categoria").value = producto.categoria;
+    document.getElementById("precio").value = producto.precio;
+    document.getElementById("cantidad").value = producto.cantidad;
+
+    productos.splice(indice, 1);
+
+    mostrarProductos();
+
+}
+
+// =========================================
+// ELIMINAR PRODUCTO
+// =========================================
+
+function eliminarProducto(indice) {
+
+    let confirmar = confirm(
+        "¿Está seguro de eliminar este producto?"
+    );
+
+    if (confirmar) {
+
+        productos.splice(indice, 1);
+
+        mostrarProductos();
+
+        alert("Producto eliminado correctamente.");
+
+    }
+
+}
+
+// =========================================
+// BUSCAR PRODUCTO
+// =========================================
+
+function buscarProducto() {
+
+    let filtro = document
+        .getElementById("buscar")
+        .value
+        .toLowerCase();
+
+    let filas = document
+        .getElementById("tablaProductos")
+        .getElementsByTagName("tr");
+
+    for (let i = 0; i < filas.length; i++) {
+
+        let columna =
+            filas[i].getElementsByTagName("td")[1];
+
+        if (columna) {
+
+            let texto = columna.textContent.toLowerCase();
+
+            if (texto.indexOf(filtro) > -1) {
+
+                filas[i].style.display = "";
+
+            } else {
+
+                filas[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+}
+
+// =========================================
+// MENSAJE DE BIENVENIDA
+// =========================================
+
+window.onload = function () {
+
+    console.log("Sistema de Gestión de Productos iniciado correctamente.");
 
 }

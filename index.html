@@ -1,56 +1,235 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestión de Productos</title>
+
     <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
 
-<div class="contenedor">
+    <!-- ENCABEZADO -->
 
-<h1>Sistema de Gestión de Productos</h1>
+    <header>
 
-<input type="text" id="producto" placeholder="Nombre del producto">
+        <div class="logo">
 
-<input type="number" id="precio" placeholder="Precio">
+            <h1>🛒 Product Manager</h1>
 
-<input type="number" id="cantidad" placeholder="Cantidad">
+            <p>Sistema de Gestión de Productos</p>
 
-<button onclick="agregarProducto()">
-Agregar Producto
-</button>
+        </div>
 
-<table>
+        <nav>
 
-<thead>
+            <ul>
 
-<tr>
+                <li><a href="#">Inicio</a></li>
 
-<th>Producto</th>
-<th>Precio</th>
-<th>Cantidad</th>
-<th>Total</th>
-<th>Acción</th>
+                <li><a href="#">Productos</a></li>
 
-</tr>
+                <li><a href="#">Inventario</a></li>
 
-</thead>
+                <li><a href="#">Reportes</a></li>
 
-<tbody id="tablaProductos">
+            </ul>
 
-</tbody>
+        </nav>
 
-</table>
+    </header>
 
-<h2 id="totalGeneral">
-Valor Total: $0
-</h2>
+    <!-- CONTENEDOR -->
 
-</div>
+    <main class="contenedor">
 
-<script src="script.js"></script>
+        <!-- TARJETAS -->
+
+        <section class="cards">
+
+            <div class="card">
+
+                <h3>Total Productos</h3>
+
+                <h2 id="cantidadProductos">0</h2>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Valor Inventario</h3>
+
+                <h2 id="valorInventario">$0</h2>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Productos Registrados</h3>
+
+                <h2 id="productosRegistrados">0</h2>
+
+            </div>
+
+        </section>
+
+        <!-- FORMULARIO -->
+
+        <section class="formulario">
+
+            <h2>Registrar Producto</h2>
+
+            <form id="formularioProducto">
+
+                <div class="grupo">
+
+                    <label>Nombre del Producto</label>
+
+                    <input
+                        type="text"
+                        id="producto"
+                        placeholder="Ingrese el nombre del producto">
+
+                </div>
+
+                <div class="grupo">
+
+                    <label>Categoría</label>
+
+                    <select id="categoria">
+
+                        <option value="">Seleccione</option>
+
+                        <option>Computadores</option>
+
+                        <option>Celulares</option>
+
+                        <option>Accesorios</option>
+
+                        <option>Electrónica</option>
+
+                    </select>
+
+                </div>
+
+                <div class="grupo">
+
+                    <label>Precio</label>
+
+                    <input
+                        type="number"
+                        id="precio"
+                        placeholder="Ingrese el precio">
+
+                </div>
+
+                <div class="grupo">
+
+                    <label>Cantidad</label>
+
+                    <input
+                        type="number"
+                        id="cantidad"
+                        placeholder="Cantidad disponible">
+
+                </div>
+
+                <div class="botones">
+
+                    <button type="button" onclick="agregarProducto()">
+
+                        Agregar Producto
+
+                    </button>
+
+                    <button type="reset">
+
+                        Limpiar
+
+                    </button>
+
+                </div>
+
+            </form>
+ 
+        </section>
+                <!-- BUSCADOR -->
+
+        <section class="buscador">
+
+            <h2>Buscar Producto</h2>
+
+            <input
+                type="text"
+                id="buscar"
+                placeholder="Escriba el nombre del producto..."
+                onkeyup="buscarProducto()">
+
+        </section>
+
+        <!-- TABLA -->
+
+        <section class="tabla">
+
+            <h2>Inventario de Productos</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Producto</th>
+
+                        <th>Categoría</th>
+
+                        <th>Precio</th>
+
+                        <th>Cantidad</th>
+
+                        <th>Total</th>
+
+                        <th>Acciones</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="tablaProductos">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+
+    <footer>
+
+        <p>
+            © 2026 Sistema de Gestión de Productos |
+            Desarrollado con HTML, CSS y JavaScript
+        </p>
+
+    </footer>
+
+    <script src="script.js"></script>
 
 </body>
-</html>
+
+</html>           
+                                                                                                           
